@@ -16,13 +16,13 @@
     margin: 0;
 }
 
-.profile-container {
+.container {
     text-align: center;
     max-width: 400px;
     margin: 0 auto;
 }
 
-.profile-card {
+.card {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 20px;
@@ -32,57 +32,68 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-card img {
+.card img {
     width: 100px;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
-.profile-card p {
+.card p {
     font-size: 18px;
     color: #333;
 }
 </style>
 </head>
 <body>
-    <div class="profile-container">
+        
+    
+    <div class="container"> 
         <h1>GitHub User Profile</h1>
-        <div id="profile-card" class="profile-card"></div>
+        <p class="text">Enter user name <input type="text" class="userInput"></p>
+        <button class="submit">Search</button>
+        <div id="card" class="card"></div>
     </div>
 
-    <script >
-        const requestURL = "https://api.github.com/users/Rushi425";
-const xhr = new XMLHttpRequest();
+<script >
+document.querySelector('.submit').addEventListener('click', function(){
+    const userInput = document.querySelector('.userInput').value;
+    const requestURL =`https://api.github.com/users/${userInput}`;
+    const xhr = new XMLHttpRequest();
 
-xhr.open('GET', requestURL);
+    xhr.open('GET', requestURL);
 
-xhr.onreadystatechange = function () {
-    console.log(xhr.readyState); // To check the status continuously
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        const data = JSON.parse(this.responseText); // Parse the response JSON
-        console.log(data);
+// document.addEventListener('.submit')
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+            const profileCard = document.getElementById('card');
+            profileCard.innerHTML = '';
 
-        const img = data.avatar_url;
-        const followers = data.followers;
+            if(xhr.status === 200){
+                const data = JSON.parse(this.responseText);
+                const img = data.avatar_url;
+                const follower = data.followers;
 
-        const profileCard = document.getElementById('profile-card');
+                //create and append profile image
+                const image = document.createElement('img')
+                image.src = img;
+                image.alt = "User image";
 
-        // Create and append profile image
-        const image = document.createElement('img');
-        image.src = img;
-        image.alt = 'User Avatar';
+                const followers = document.createElement('p')
+                followers.textContent = `Followers : ${follower}`;
 
-        // Create and append followers count
-        const followersText = document.createElement('p');
-        followersText.textContent = `Followers: ${followers}`;
-
-        // Append the elements to the profile card
-        profileCard.appendChild(image);
-        profileCard.appendChild(followersText);
+                profileCard.appendChild(image);
+                profileCard.appendChild(followers);
+            }
+            else{
+                profileCard.innerHTML = "USER NOT FOUND";
+            }
+            
+        }
     }
-};
 
-xhr.send();
-    </script>
+});
+
+
+</script>
 </body>
 </html>
