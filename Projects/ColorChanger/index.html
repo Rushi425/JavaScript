@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Display</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.profile-container {
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card img {
+    width: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-card p {
+    font-size: 18px;
+    color: #333;
+}
+</style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>GitHub User Profile</h1>
+        <div id="profile-card" class="profile-card"></div>
+    </div>
+
+    <script >
+        const requestURL = "https://api.github.com/users/Rushi425";
+const xhr = new XMLHttpRequest();
+
+xhr.open('GET', requestURL);
+
+xhr.onreadystatechange = function () {
+    console.log(xhr.readyState); // To check the status continuously
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        const data = JSON.parse(this.responseText); // Parse the response JSON
+        console.log(data);
+
+        const img = data.avatar_url;
+        const followers = data.followers;
+
+        const profileCard = document.getElementById('profile-card');
+
+        // Create and append profile image
+        const image = document.createElement('img');
+        image.src = img;
+        image.alt = 'User Avatar';
+
+        // Create and append followers count
+        const followersText = document.createElement('p');
+        followersText.textContent = `Followers: ${followers}`;
+
+        // Append the elements to the profile card
+        profileCard.appendChild(image);
+        profileCard.appendChild(followersText);
+    }
+};
+
+xhr.send();
+    </script>
+</body>
+</html>
