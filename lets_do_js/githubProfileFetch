@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //https://randomuser.me/api/
+        const requestURL = "https://api.github.com/users/Rushi425"
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET',requestURL)
+        xhr.onreadystatechange = function(){
+            console.log(xhr.readyState);// to check the status continously
+            if(xhr.readyState === 4 && xhr.status === 200){
+                // console.log("Succesfull");
+                // console.log(this.responseText);
+                const data = JSON.parse(this.responseText);// the data we get in form of string we need to convert in josn(JSON.parse)
+                console.log(data);
+                
+                console.log(data.followers);
+                const img = data.avatar_url;
+                // console.log(img);
+                
+
+                 //+++++++++Project+++++++++++++++++
+                 const card = document.createElement('div')
+                 card.style.border = '1px solid #ccc';
+                 card.style.borderRadius = '8px';
+                 card.style.padding = '16px';
+                 card.style.margin = '16px';
+                 card.style.textAlign = 'center';
+                 card.style.width = '200px';
+
+
+                //  create an image object
+                 const image = document.createElement('img');
+                 image.src = img;
+                 image.style.width = '100px';
+                 image.style.borderRadius = '50%';
+                 image.alt = 'User Avatar';
+
+                 //create an followers object
+                 const followers = document.createElement('p');
+                 followers.textContent = `Followers : ${data.followers}`;
+
+
+                  // Append the image and followers count to the card
+                card.appendChild(image);
+                card.appendChild(followers);
+
+                //append the card to the body
+                document.body.appendChild(card);
+            }
+            
+        }
+        
+        // console.log(xhr.readyState);
+        //to call the open
+        xhr.send();
+    </script>
+</body>
+</html>
