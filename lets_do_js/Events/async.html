@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+<head>
+    <meta charset = 'UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async</title>
+</head>
+<body>
+    <h1>Hello world</h1>
+    <input type="button" id="stop" value="stop">
+    <p class="display"></p>
+</body>
+<script>
+    // setTimeout(function(){
+    //     console.log("Rushi");
+        
+    // },2000);
+
+    // It will print continue after the time
+    // setInterval(function(){
+    //     console.log("Rushi");
+    // },2000)
+    //we can also do this like
+    // const rushi = function(){
+    //     console.log("Rushi");
+    // }
+    // setInterval(rushi,2000)
+
+    //to change the the something
+    // const changeText = function(){
+    //      document.querySelector('h1').innerHTML="Hello Rushi"
+    // }
+    // setInterval(changeText,2000)
+
+    // const r = function(){
+    //     document.querySelector('p').innerHTML="Welcome"
+    // }
+    // setInterval(r,1000);
+
+
+
+    //to stop the change by clicking the button
+    const rushi = function(){
+        document.querySelector('h1').innerHTML = "hello";
+    }
+    const setInt = setInterval(rushi,2000)
+
+    document.querySelector('#stop').addEventListener('click',function(){
+        clearInterval(setInt);
+        console.log('Stopped');
+    })
+    
+
+</script>
+</html>
+
